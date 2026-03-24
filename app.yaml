@@ -1,0 +1,27 @@
+runtime: nodejs20
+service: default
+env: standard
+
+instance_class: F2
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.65
+
+entrypoint: node src/index.js
+
+env_variables:
+  PORT: "8080"
+  NODE_ENV: "production"
+  JWT_EXPIRES_IN: "7d"
+  RESET_TOKEN_EXPIRES_MINUTES: "30"
+
+beta_settings:
+  cloud_sql_instances: "project-e850148f-e9b2-4456-99d:us-central1:YOUR_ACTUAL_INSTANCE_NAME"
+
+skip_files:
+  - node_modules/
+  - .env
+  - .git/
+  - README.md
