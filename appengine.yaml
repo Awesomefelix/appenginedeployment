@@ -24,4 +24,4 @@ skip_files:
   - node_modules/
   - .env
   - .git/
-  - README.md
+  - README.md #hmmm
