@@ -1,0 +1,41 @@
+substitutions:
+  _SERVICE_NAME: flxcloudrun
+  _REGION: us-central1
+  _IMAGE: us-central1-docker.pkg.dev/${PROJECT_ID}/gcp-api/gcp-api
+
+steps:
+  # 1. Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - '-t'
+      - '${_IMAGE}:${SHORT_SHA}'
+      - '-t'
+      - '${_IMAGE}:latest'
+      - '.'
+
+  # 2. MANUALLY Push the specific tag needed for deploy
+  # This ensures the image exists BEFORE Cloud Run tries to grab it
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_IMAGE}:${SHORT_SHA}']
+
+  # 3. Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - '${_SERVICE_NAME}'
+      - '--image=${_IMAGE}:${SHORT_SHA}'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--quiet'
+
+# Keep this to ensure 'latest' also gets pushed at the end
+images:
+  - '${_IMAGE}:latest'
+
+serviceAccount: 'projects/${PROJECT_ID}/serviceAccounts/389077935832@cloudbuild.gserviceaccount.com'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
