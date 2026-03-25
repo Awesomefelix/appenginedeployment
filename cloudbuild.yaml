@@ -24,7 +24,7 @@ steps:
 # ================= 3. FETCH SECRETS =================
 availableSecrets:
   secretManager:
-    - versionName: projects/389077935832/secrets/dev-DB_PASSWORD
+    - versionName: projects/389077935832/secrets/dev-DB_PASSWORD/versions/latest
       env: 'DB_PASSWORD'
     - versionName: projects/389077935832/secrets/dev-JWT_SECRET
       env: 'JWT_SECRET'
