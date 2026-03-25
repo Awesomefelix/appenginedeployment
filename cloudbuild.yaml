@@ -26,7 +26,7 @@ availableSecrets:
   secretManager:
     - versionName: projects/389077935832/secrets/dev-DB_PASSWORD/versions/latest
       env: 'DB_PASSWORD'
-    - versionName: projects/389077935832/secrets/dev-JWT_SECRET
+    - versionName: projects/389077935832/secrets/dev-JWT_SECRET/versions/latest
       env: 'JWT_SECRET'
     - versionName: projects/project-e850148f-e9b2-4456-99d/secrets/SENDGRID_API_KEY/versions/latest
       env: 'SENDGRID_API_KEY'
