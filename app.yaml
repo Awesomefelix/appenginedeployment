@@ -5,7 +5,7 @@ runtime: nodejs20 # Use the latest LTS version of Node supported by GCP
 env_variables:
   NODE_ENV: 'production'
   # App Engine connects to Cloud SQL via Unix Sockets natively using this path:
-  DB_HOST: '/cloudsql/project-e850148f-e9b2-4456-99d:us-central1:your-instance'
+  DB_HOST: '/cloudsql/projects/389077935832/secrets/dev-CLOUD_SQL_INSTANCE_CONNECTION_NAME'
   DB_PORT: '5432'
   DB_NAME: 'dev-DB_NAME'
   DB_USER: 'dev-DB_USER'
