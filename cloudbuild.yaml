@@ -13,7 +13,6 @@ steps:
         # Securely append secrets to the bottom of your app.yaml before deploying
         echo "  DB_PASSWORD: '$$DB_PASSWORD'" >> app.yaml
         echo "  JWT_SECRET: '$$JWT_SECRET'" >> app.yaml
-        echo "  SENDGRID_API_KEY: '$$SENDGRID_API_KEY'" >> app.yaml
         
         # Run the deployment command
         gcloud app deploy app.yaml --project=project-e850148f-e9b2-4456-99d --quiet
