@@ -24,10 +24,10 @@ steps:
 # ================= 3. FETCH SECRETS =================
 availableSecrets:
   secretManager:
-    - versionName: projects/project-e850148f-e9b2-4456-99d/secrets/DB_PASSWORD/versions/latest
-      env: 'DB_PASSWORD'
-    - versionName: projects/project-e850148f-e9b2-4456-99d/secrets/JWT_SECRET/versions/latest
-      env: 'JWT_SECRET'
+    - versionName: projects/389077935832/secrets/dev-DB_PASSWORD
+      env: 'dev-DB_PASSWORD'
+    - versionName: projects/389077935832/secrets/dev-JWT_SECRET
+      env: 'dev-JWT_SECRET'
     - versionName: projects/project-e850148f-e9b2-4456-99d/secrets/SENDGRID_API_KEY/versions/latest
       env: 'SENDGRID_API_KEY'
 
@@ -36,4 +36,3 @@ timeout: '1600s'
 # ================= 4. FIX LOGGING ERROR =================
 options:
   logging: CLOUD_LOGGING_ONLY
-  # Note: logsBucket has been intentionally removed to prevent the permissions error
