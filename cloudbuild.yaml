@@ -18,7 +18,7 @@ steps:
         gcloud app deploy app.yaml --project=project-e850148f-e9b2-4456-99d --quiet
     
     # Links this specific step to the secrets fetched below
-    secretEnv: ['DB_PASSWORD', 'JWT_SECRET', 'SENDGRID_API_KEY']
+    secretEnv: ['DB_PASSWORD', 'JWT_SECRET']
 
 # ================= 3. FETCH SECRETS =================
 availableSecrets:
