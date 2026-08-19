@@ -1,90 +1,18 @@
-name: Deploy Frontend to Azure
-
-on:
-  push:
-    branches: [ "main" ]
-    paths-ignore:
-      - 'backend/**'
-  workflow_dispatch:
-
-env:
-  AZURE_WEBAPP_NAME: 'app-efc-frontend'
-  NODE_VERSION: '20.x'
-
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
 jobs:
-  build-test-and-deploy-frontend:
-    name: Build, Test & Deploy Frontend
+  Explore-GitHub-Actions:
     runs-on: ubuntu-latest
-    environment: efc-secrets
-    
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4 # nosemgrep
-        with:
-          submodules: recursive 
-          fetch-depth: 0
-          token: ${{ secrets.GH_PAT }} # <-- This line unlocks the private backend repo!
-          
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          
-      - name: Install Frontend Dependencies
-        run: npm ci
-
-      # ==========================================
-      # CONTINUOUS INTEGRATION (CI) CHECKS
-      # ==========================================
-      - name: Run NPM Audit (Dependency Security Scan)
-        # Fails the pipeline ONLY if High or Critical vulnerabilities are found
-        run: npm audit --audit-level=high
-
-      - name: Run Linter
-        run: npm run lint --if-present 
-
-      - name: Run Unit Tests
-        run: npm run test --if-present
-
-      # - name: Run Semgrep SAST (Static Code Security Scan)
-      #   run: npx @semgrep/cli scan --config auto --error 
-
-      # ==========================================
-      # BUILD & DEPLOYMENT
-      # ==========================================
-      - name: Build Next.js Application
-        run: npm run build
-        env:
-          NEXTAUTH_URL: "http://localhost:3000"
-          NEXTAUTH_SECRET: "dummy-build-secret"
-          # 👇 INJECTED: This ensures the URL is baked into the frontend build 👇
-          NEXT_PUBLIC_API_URL: 'https://api-calc.ensurefinancialgroup.com'
-          
-          # NOTE: If you need NEXT_PUBLIC_APP_URL to work in the browser as well, 
-          # uncomment the line below and add your URL:
-          # NEXT_PUBLIC_APP_URL: 'https://your-frontend-url.com'
-
-      - name: Zip Artifacts for Deployment
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v6
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
         run: |
-          # Next.js standalone requires the public folder and static assets to be manually copied inside the bundle
-          cp -r public .next/standalone/public
-          cp -r .next/static .next/standalone/.next/static
-          
-          # Navigate into the standalone directory and zip everything directly from inside it
-          cd .next/standalone
-          zip -r ../../frontend-release.zip .
-
-      - name: Authenticate with Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_MAIN_CREDENTIALS }}
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: frontend-release.zip
-
-      - name: Azure Logout
-        run: az logout
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
